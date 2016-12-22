@@ -1,0 +1,9 @@
+*
+
+!.emacs.d
+!.zsh
+!.spacemacs
+!.tmux.conf
+!.zshenv
+!.zshrc
+!README.md

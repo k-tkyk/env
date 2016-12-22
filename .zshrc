@@ -208,18 +208,24 @@ fpath=($HOME/.zsh/anyframe(N-/) $fpath)
 autoload -Uz anyframe-init
 anyframe-init
 
-# よく移動するディレクトリ一覧をインクリメントサーチ & 移動
-bindkey '^@' anyframe-widget-cdr
-
-# bash history一覧インクリメントサーチ & 実行
-bindkey '^r' anyframe-widget-execute-history
-
-# branch一覧をインクリメントサーチ & checkout
-bindkey '^xbr' anyframe-widget-checkout-git-branch
+# bash history一覧インクリメントサーチ
+bindkey '^r' anyframe-widget-put-history
 
 # プロセス一覧をインクリメントサーチ & kill
-bindkey '^x^k' anyframe-widget-kill
+bindkey '^xk' anyframe-widget-kill
 
 # ghqでインクリメンタルサーチ
-bindkey '^x^g' anyframe-widget-cd-ghq-repository
+bindkey '^xg' anyframe-widget-cd-ghq-repository
+
+# ファイル名をコマンドラインに挿入
+bindkey '^xif' anyframe-widget-insert-filename
+
+# branch一覧をインクリメントサーチ & checkout
+bindkey '^xib' anyframe-widget-checkout-git-branch
+
+# よく移動するディレクトリ一覧をインクリメントサーチ & 移動
+bindkey '^xcd' anyframe-widget-cdr
+
+# branch一覧をインクリメントサーチ & checkout
+bindkey '^xcb' anyframe-widget-checkout-git-branch
 
