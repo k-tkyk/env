@@ -31,8 +31,6 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     yaml
-     javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -40,6 +38,8 @@ values."
      ;; ----------------------------------------------------------------
      ivy
      (go :variables go-tab-width 4)
+     yaml
+     javascript
      auto-completion
      ;; better-defaults
      emacs-lisp
