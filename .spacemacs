@@ -31,6 +31,10 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     sql
+     markdown
+     python
+     html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -298,14 +302,27 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; 起動画面削除
   (setq inhibit-startup-message t)
   ;; 起動画面で recentf を開く
-  (add-hook 'after-init-hook (lambda()
-                               (recentf-open-files)
-                               ))
+  ;; (add-hook 'after-init-hook (lambda()
+  ;;                             (recentf-open-files)
+  ;;                             ))
   ;; Melpa
   (add-to-list 'package-archives
                '("melpa" . "http://melpa.org/packages/"))
 
+  ;; python
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (define-key jedi-mode-map (kbd "<C-tab>") nil) ;;C-tabはウィンドウの移動に用いる
+  (setq jedi:complete-on-dot t)
+  (setq ac-sources
+        (delete 'ac-source-words-in-same-mode-buffers ac-sources)) ;;jediの補完候補だけでいい
+  (add-to-list 'ac-sources 'ac-source-filename)
+  (add-to-list 'ac-sources 'ac-source-jedi-direct)
+  (define-key python-mode-map "\C-ct" 'jedi:goto-definition)
+  (define-key python-mode-map "\C-cb" 'jedi:goto-definition-pop-marker)
+  (define-key python-mode-map "\C-cr" 'helm-jedi-related-names)
+
   )
+
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -325,6 +342,8 @@ you should place your code here."
   (define-key global-map [?¥] [?\\])
   (keyboard-translate ?\C-h ?\C-?)
 
+  (package-initialize)
+
   ;;recentf-ext
   ;; 自動保存
   (when (require 'recentf-ext nil t)
@@ -338,6 +357,16 @@ you should place your code here."
   (global-set-key (kbd "C-x C-r") 'counsel-recentf)
   (global-set-key (kbd "C-x C-g") 'rgrep)
 
+  (define-key input-decode-map "\e\eOA" [(meta up)])
+  (define-key input-decode-map "\e\eOB" [(meta down)])
+  (define-key input-decode-map "\e\eOC" [(meta right)])
+  (define-key input-decode-map "\e\eOD" [(meta left)])
+
+  (global-set-key [(meta up)] 'windmove-up)              ; move to upper window
+  (global-set-key [(meta down)] 'windmove-down)          ; move to lower window
+  (global-set-key [(meta right)] 'windmove-right)        ; move to right window
+  (global-set-key [(meta left)] 'windmove-left)          ; move to left window
+
   ;; scroll one line at a time (less "jumpy" than defaults)
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
   (setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
@@ -350,7 +379,7 @@ you should place your code here."
   ;; highlighting
   ;;(global-hl-line-mode t)
   (require 'hl-line)
-;;; hl-lineを無効にするメジャーモードを指定する
+  ;;; hl-lineを無効にするメジャーモードを指定する
   (defvar global-hl-line-timer-exclude-modes '(todotxt-mode))
   (defun global-hl-line-timer-function ()
     (unless (memq major-mode global-hl-line-timer-exclude-modes)
@@ -359,6 +388,25 @@ you should place your code here."
         (global-hl-line-highlight))))
   (setq global-hl-line-timer
         (run-with-idle-timer 0.03 t 'global-hl-line-timer-function))
+
+  (setq tern-command '("node" "tern"))
+
+  (defun your-layer-name/init-vue-mode ()
+    (use-package vue-mode))
+
+  ;; python
+  ;(require 'flymake-python-pyflakes)
+  ;(flymake-mode t)
+  ;;errorやwarningを表示する
+  ;(flymake-python-pyflakes-load)
+
+  ;(require 'py-autopep8)
+  ;(define-key python-mode-map (kbd "C-c F") 'py-autopep8)
+  ;(define-key python-mode-map (kbd "C-c f") 'py-autopep8-region)
+  ;(setq py-autopep8-options '("--max-line-length=200"))
+  ;(setq flycheck-flake8-maximum-line-length 200)
+  ;(add-hook 'before-save-hook 'py-autopep8-before-save)
+
   ;; (cancel-timer global-hl-line-timer)
   )
 
@@ -371,5 +419,11 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (which-key yaml-mode sync-recentf init-open-recentf recentf-ext web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode smeargle orgit org magit-gitflow gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor company-statistics company-go company auto-yasnippet yasnippet ac-ispell auto-complete helm-themes helm-swoop helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag ace-jump-helm-line go-guru go-eldoc go-mode ws-butler window-numbering wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm helm-core google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump popup f s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy quelpa package-build spacemacs-theme))))
+    (vue-mode flycheck jedi-core flymake-python-pyflakes py-autopep8 jedi winum fuzzy drupal-mode sql-indent mmm-mode markdown-toc markdown-mode gh-md yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode cython-mode company-anaconda anaconda-mode pythonic web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode haml-mode emmet-mode company-web web-completion-data js3-mode gotest which-key yaml-mode sync-recentf init-open-recentf recentf-ext web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode smeargle orgit org magit-gitflow gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor company-statistics company-go company auto-yasnippet yasnippet ac-ispell auto-complete helm-themes helm-swoop helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag ace-jump-helm-line go-guru go-eldoc go-mode ws-butler window-numbering wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm helm-core google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump popup f s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy quelpa package-build spacemacs-theme))))
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
