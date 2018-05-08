@@ -1,7 +1,8 @@
 *
+!.vscodesettings/*.json
+!.vscodesettings/snippets/**/
 !.zsh/**/
 !.tmux.conf
 !.zshenv
 !.zshrc
 !README.md
-
