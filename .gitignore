@@ -1,6 +1,8 @@
 *
+!.vscode/
 !.vscodesettings/
 .vscodesettings/workspaceStorage
+.vscodesettings/*.backup
 !.zsh/**/
 !.tmux.conf
 !.zshenv
