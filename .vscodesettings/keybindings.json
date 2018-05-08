@@ -1,0 +1,17 @@
+// 既定値を上書きするには、このファイル内にキー バインドを挿入します
+[
+  {
+    "key": "tab",
+    "command": "emacs-tab.reindentCurrentLine",
+    "when": "editorTextFocus && !editorReadonly && !editorHasMultipleSelections"
+  },
+  {
+    "key": "tab",
+    "command": "editor.action.formatSelection",
+    "when": "editorTextFocus && !editorReadonly && editorHasMultipleSelections"
+  },
+  {
+    "key": "shift+cmd+b",
+    "command": "HookyQR.beautifyFile"
+  }
+]

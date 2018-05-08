@@ -1,6 +1,6 @@
 *
-!.vscode/
-!.vscodesettings/
+.emacs.d
+!.vscodesettings/**/
 .vscodesettings/workspaceStorage
 .vscodesettings/*.backup
 !.zsh/**/
