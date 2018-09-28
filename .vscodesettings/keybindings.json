@@ -13,5 +13,75 @@
   {
     "key": "shift+cmd+b",
     "command": "HookyQR.beautifyFile"
+  },
+  {
+    "key": "ctrl+shift+a shift+[Minus]",
+    "command": "codealignment.alignbyequals",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+cmd+[Minus] shift+cmd+[Minus]",
+    "command": "-codealignment.alignbyequals",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+a .",
+    "command": "codealignment.alignbyperiod",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+cmd+[Minus] cmd+.",
+    "command": "-codealignment.alignbyperiod",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+a shift+2",
+    "command": "codealignment.alignbyquote",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+cmd+[Minus] shift+cmd+7",
+    "command": "-codealignment.alignbyquote",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+a space",
+    "command": "codealignment.alignbyspace",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+cmd+[Minus] cmd+space",
+    "command": "-codealignment.alignbyspace",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+a s",
+    "command": "codealignment.alignbystring",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+cmd+[Semicolon]",
+    "command": "-codealignment.alignbystring",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+a e",
+    "command": "codealignment.alignbyequalsfromcaret",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+cmd+[Minus] shift+cmd+[Semicolon]",
+    "command": "-codealignment.alignbyequalsfromcaret",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+a q",
+    "command": "codealignment.alignbyquotefromcaret",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+cmd+[Minus] shift+cmd+2",
+    "command": "-codealignment.alignbyquotefromcaret",
+    "when": "editorTextFocus"
   }
 ]
