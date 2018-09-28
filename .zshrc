@@ -243,3 +243,9 @@ eval "$(direnv hook zsh)"
 # git
 export GIT_EDITOR=vim
 
+# php
+export PATH="/usr/local/opt/php@7.1/bin:/usr/local/opt/php@7.1/sbin:$PATH"
+
+export PATH="/usr/local/opt/php@7.0/bin:$PATH"
+export PATH="/usr/local/opt/php@7.0/sbin:$PATH"
+export PATH=$HOME/.nodebrew/current/bin:$PATH
